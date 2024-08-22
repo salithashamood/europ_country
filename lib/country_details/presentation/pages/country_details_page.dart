@@ -10,7 +10,6 @@ class CountryDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String getLanguages() {
       List<String> languages = [];
       countryModel.languages!.forEach((key, value) {
@@ -18,6 +17,7 @@ class CountryDetailsPage extends StatelessWidget {
       });
       return languages.join(", ");
     }
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -51,35 +51,14 @@ class CountryDetailsPage extends StatelessWidget {
                           1: FixedColumnWidth(30),
                         },
                         children: [
-                          TableRow(children: [
-                            const TableRowWidget(value: "Capital"),
-                            const TableRowWidget(value: "-"),
-                            TableRowWidget(
-                                value: countryModel.capital?.first ?? ""),
-                          ]),
-                          TableRow(children: [
-                            const TableRowWidget(value: "Religion"),
-                            const TableRowWidget(value: "-"),
-                            TableRowWidget(value: countryModel.region ?? ""),
-                          ]),
-                          TableRow(children: [
-                            const TableRowWidget(value: "Population"),
-                            const TableRowWidget(value: "-"),
-                            TableRowWidget(
-                                value: countryModel.population.toString()),
-                          ]),
-                          TableRow(children: [
-                            const TableRowWidget(value: "Official Name"),
-                            const TableRowWidget(value: "-"),
-                            TableRowWidget(
-                                value: countryModel.name?.official ?? ""),
-                          ]),
-                          TableRow(children: [
-                            const TableRowWidget(value: "Languages"),
-                            const TableRowWidget(value: "-"),
-                            TableRowWidget(
-                                value: getLanguages()),
-                          ]),
+                          tableRow(
+                              "Capital", countryModel.capital?.first ?? ""),
+                          tableRow("Religion", countryModel.region ?? ""),
+                          tableRow(
+                              "Population", countryModel.population.toString()),
+                          tableRow("Official Name",
+                              countryModel.name?.official ?? ""),
+                          tableRow("Languages", getLanguages()),
                         ],
                       ),
                     ],
@@ -90,6 +69,16 @@ class CountryDetailsPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  TableRow tableRow(String value1, String value2) {
+    return TableRow(
+      children: [
+        TableRowWidget(value: value1),
+        const TableRowWidget(value: "-"),
+        TableRowWidget(value: value2),
+      ],
     );
   }
 }
